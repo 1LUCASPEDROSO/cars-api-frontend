@@ -1,0 +1,29 @@
+
+<div class="body" fxLayout="column" fxLayoutAlign="center center" > 
+
+  <div>
+    <h3 mat-dialog-title>{{title}}</h3>
+  </div>
+    
+
+  @if(message2){
+    <div mat-dialog-content style="height: 70px; text-align: center;">
+      <p>{{message}}</p>
+      <p><strong>{{message2}}</strong></p>
+    </div>
+  } 
+  @else {
+    <div mat-dialog-content style="height: 40px; text-align: center;">
+      <p>{{message}}</p>
+    </div>
+  }
+
+
+    <div mat-dialog-actions style="margin-top: 10px" fxLayoutGap="10px" class="btn-actions">
+      <button class="buttons" mat-raised-button (click)="onNoClick()">Cancelar</button>
+      <button class="buttons" mat-raised-button color="warn" (click)="onYesClick()">Confirmar</button>
+    </div>
+</div>
+
+
+
