@@ -1,0 +1,65 @@
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+
+    <mat-toolbar>Gerenciamento de sistema</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/list-user">
+        <mat-icon class="menu-image">person_outline</mat-icon>
+        <span class="menu">Usuários</span>
+      </a>
+      <a mat-list-item routerLink="/list-brand">
+        <mat-icon class="menu-image">traffic_jam</mat-icon>
+        <span class="menu">Marcas</span>
+      </a>
+      <a mat-list-item routerLink="/list-company">
+        <mat-icon class="menu-image">garage</mat-icon>
+        <span class="menu">Modelos</span>
+      </a>
+      <a mat-list-item routerLink="/list-product">
+        <mat-icon class="menu-image">directions_car</mat-icon>
+        <span class="menu">Carros</span>
+      </a>
+      <a mat-list-item routerLink="/list-report">
+        <mat-icon class="menu-image">file_copy</mat-icon>
+        <span class="menu">Relatório</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div>
+      <mat-toolbar style="background-color:#DCDCDC;">
+        <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <span class="toolbar-item-spacer"></span>
+
+        <button mat-icon-button matTooltip="Detalhes" [matMenuTriggerFor]="userDetailsMenu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #userDetailsMenu>
+          <button mat-menu-item>
+            <mat-icon>person</mat-icon>
+            <span>teste</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>storage</mat-icon>
+            <span>{{env}}</span>
+          </button>
+        </mat-menu>
+
+        <button mat-icon-button matTooltip="Logout" [matMenuTriggerFor]="logoutMenu">
+          <mat-icon>exit_to_app</mat-icon>
+        </button>
+        <mat-menu #logoutMenu [overlapTrigger]="false" yPosition="below">
+          <button mat-menu-item routerLink="/login">
+            <mat-icon>exit_to_app</mat-icon>Logout
+          </button>
+        </mat-menu>
+
+      </mat-toolbar>
+    </div>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
