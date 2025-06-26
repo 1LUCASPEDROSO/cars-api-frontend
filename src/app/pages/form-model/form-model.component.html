@@ -1,0 +1,52 @@
+<div class="main-body">
+    <form [formGroup]="entityForm" novalidate (ngSubmit)="Save()">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>{{formName}}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column"
+                    fxLayoutGap="20px" fxLayoutGap.lg="15px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px"
+                    fxLayoutGap.xs="0px">
+
+                    <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
+                        <label>Nome</label>
+                        <mat-form-field>
+                            <input matInput placeholder="Digite o nome do modelo" formControlName="name">
+                            @if (entityForm.controls['name'].hasError('required')) {
+                            <mat-error><strong>{{requiredMessage}}</strong></mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                    <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
+                        <label>Valor fipe</label>
+                        <mat-form-field>
+                            <input matInput currencyMask [options]="{ align:'left', prefix: 'R$ ', thousands: '.', decimal: ',' }" placeholder="Digite o valor da fipe" formControlName="fipe_value" class="ipt-fipe">
+                            @if (entityForm.controls['fipe_value'].hasError('required')) {
+                            <mat-error><strong>{{requiredMessage}}</strong></mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                    <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
+                        <label>selecione a marca</label>
+                        <mat-form-field appearance="fill">
+                            <mat-select placeholder="Selecione a marca" formControlName="brand_id">
+                                <mat-option *ngFor="let brand of brands" [value]="brand.id">
+                                    {{ brand.name}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="entityForm.controls['brand_id'].hasError('required')">
+                                <strong>{{ requiredMessage }}</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </mat-card-content>
+            <mat-card-actions>
+                <button routerLink="{{listPage}}" mat-raised-button type="button" tabindex="-1">Cancelar</button>
+                <button mat-raised-button color="primary" type="submit">Salvar</button>
+            </mat-card-actions>
+        </mat-card>
+    </form>
+</div>
