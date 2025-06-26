@@ -1,0 +1,36 @@
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.main-body {
+    max-width: 1348px;
+    padding: 10px;
+
+    mat-form-field {
+        width: 100%;
+    }
+
+    mat-card mat-card-header {
+        font-size: 18px;
+        font-weight: 600;
+        padding: 30px 0px 10px 30px;
+    }
+
+}
+
+.filter {
+    margin: 20px 0px 20px 10px;
+    display: flex;
+
+    mat-form-field {
+        height: 40px;
+    }
+
+    button {
+        width: 160px;
+        margin: 7px 15px 0px 30px;
+        font-size: 14px !important;
+        font-weight: 600;
+    }
+}
+
