@@ -54,18 +54,33 @@ export class FormBrandComponent implements OnInit {
     })
   }
   Save() {
-    if (this.entityForm.valid) {
-        const brandData = {...this.entityForm.value, name: this.entityForm.value.name.toLowerCase()
-    };
-     this.brandService.addBrand(brandData).subscribe(() => {
-          this.ngx.success("marca registrada com sucesso")
-        },
-        (error: any) => {
-        this.ngx.error(error.erro)
-        });
-    } else {
-      this.entityForm.markAllAsTouched();
-    }
+  if (this.entityForm.valid) {
+    const brandName = this.entityForm.value.name.trim().toLowerCase();
+
+    this.brandService.getBrandByName(brandName).subscribe({
+      next: (existingBrand) => {
+        if (existingBrand) {
+          this.ngx.warning("Essa marca já está registrada.");
+        } else {
+          const brandData = { name: brandName };
+          this.brandService.addBrand(brandData).subscribe({
+            next: () => {
+              this.ngx.success("Marca registrada com sucesso");
+            },
+            error: (error) => {
+              this.ngx.error(error?.message || "Erro ao registrar marca");
+            }
+          });
+        }
+      },
+      error: () => {
+        this.ngx.error("Erro ao verificar se a marca já existe");
+      }
+    });
+  } else {
+    this.entityForm.markAllAsTouched();
   }
+}
+
   
 }
