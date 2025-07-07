@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule,Router,ActivatedRoute  } from '@angular/router';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { OnInit } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatError } from '@angular/material/form-field';
 import { BrandService } from '../../services/brand.service';
 import { ToastrService } from 'ngx-toastr';
+import { Brand } from '../../models/brand';
 @Component({
   selector: 'app-form-brand',
   standalone: true,
@@ -39,48 +40,58 @@ export class FormBrandComponent implements OnInit {
       name: ['', Validators.required],
     });
   }
-  ngOnInit(){
+  ngOnInit() {
     this.entityId = this.route.snapshot.params["id"]
-    if (this.entityId){
+    if (this.entityId) {
       this.searchBrand(this.entityId)
     }
   }
-  searchBrand(id: number){
-    this.brandService.getBrandById(id).subscribe((data:any) =>{
-      if(data == null){
+  searchBrand(id: number) {
+    this.brandService.getBrandById(id).subscribe((data: any) => {
+      if (data == null) {
         console.log("erro")
       }
       this.entityForm.controls['name'].setValue(data.name.toLowerCase())
     })
   }
   Save() {
-  if (this.entityForm.valid) {
-    const brandName = this.entityForm.value.name.trim().toLowerCase();
-
-    this.brandService.getBrandByName(brandName).subscribe({
-      next: (existingBrand) => {
-        if (existingBrand) {
-          this.ngx.warning("Essa marca já está registrada.");
-        } else {
-          const brandData = { name: brandName };
-          this.brandService.addBrand(brandData).subscribe({
-            next: () => {
-              this.ngx.success("Marca registrada com sucesso");
-            },
-            error: (error) => {
-              this.ngx.error(error?.message || "Erro ao registrar marca");
-            }
-          });
+    if (this.entityId && this.entityId > 0) {
+      const updateBrandData: Brand = { id: this.entityId, name: this.entityForm.value.name.toLowerCase() };
+      this.brandService.updateBrand(updateBrandData).subscribe({
+        next: () => {
+          this.ngx.success("marca editada com sucesso");
+        },
+        error: (error) => {
+          this.ngx.error(error?.message || "Erro ao editar marca");
         }
-      },
-      error: () => {
-        this.ngx.error("Erro ao verificar se a marca já existe");
-      }
-    });
-  } else {
-    this.entityForm.markAllAsTouched();
+      });
+    }
+    else if (this.entityForm.valid) {
+      const brandName = this.entityForm.value.name.trim().toLowerCase();
+      this.brandService.getBrandByName(brandName).subscribe({
+        next: (existingBrand) => {
+          if (existingBrand) {
+            this.ngx.warning("Essa marca já está registrada.");
+          } else {
+            const brandData = { name: brandName };
+            this.brandService.addBrand(brandData).subscribe({
+              next: () => {
+                this.ngx.success("Marca registrada com sucesso");
+              },
+              error: (error) => {
+                this.ngx.error(error?.message || "Erro ao registrar marca");
+              }
+            });
+          }
+        },
+        error: () => {
+          this.ngx.error("Erro ao verificar se a marca já existe");
+        }
+      });
+    } else {
+      this.entityForm.markAllAsTouched();
+    }
   }
-}
 
-  
+
 }
