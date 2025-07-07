@@ -11,7 +11,7 @@ apiUrl: string = environment.apiUrl
   http = inject(HttpClient)
   constructor() { }
 
-  getAllmModels(){
+  getAllModels(){
     return this.http.get<Model[]>(this.apiUrl+"api/models")
   }
   getModelById(id: number){

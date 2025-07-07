@@ -68,7 +68,7 @@ export class ListModelComponent implements AfterViewInit{
       return acc;
     }, {});
   });
-    this.modelService.getAllmModels().subscribe(models =>{
+    this.modelService.getAllModels().subscribe(models =>{
       this.dataSource.data = models
       if(!models){
         this.ngx.warning("sem dados disponiveis");
