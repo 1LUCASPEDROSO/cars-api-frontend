@@ -1,0 +1,71 @@
+<div class="main-body" fxLayout="column" fxLayoutAlign="center">
+    <mat-card>
+      <mat-card-header>
+        {{formName}}
+      </mat-card-header>
+      <mat-card-content>
+        <div class="filter">
+          <mat-form-field style="background-color: #F5F5F5;color:#808080; height: 55px;" appearance="outline">
+            <mat-icon matPrefix>search</mat-icon>
+            <input matInput (keyup)="applyFilter($event)" #input>
+          </mat-form-field>
+            <button routerLink="{{entityPage}}" matTooltip={{buttonTooltip}} mat-raised-button>
+            <mat-icon>add</mat-icon>
+            Novo
+          </button>
+        </div>
+        <div class="test" fxLayout="column" fxLayoutAlign="center stretch">
+          <table mat-table [dataSource]="dataSource" matSort (matSortChange)="($event)">
+  
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
+              <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="registerDate">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Data de Registro </th>
+              <td mat-cell *matCellDef="let element"> {{element.registerDate | date:"dd/MM/YYYY"}} </td>
+            </ng-container>
+             <ng-container matColumnDef="model_id">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Modelo </th>
+              <td mat-cell *matCellDef="let element"> {{modelMap[element.model_id] || 'Modelo desconhecido'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="year">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Ano </th>
+               <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+            </ng-container>
+            <ng-container matColumnDef="gas_type">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo de Combustivel </th>
+               <td mat-cell *matCellDef="let element"> {{ getGasTypeLabel(element.gas_type) }}</td>
+            </ng-container>
+            <ng-container matColumnDef="num_doors">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Num.Portas </th>
+               <td mat-cell *matCellDef="let element"> {{element.num_doors}} </td>
+            </ng-container>
+            <ng-container matColumnDef="color">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Cor </th>
+               <td mat-cell *matCellDef="let element"> {{element.color}} </td>
+            </ng-container>
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef style="width: 130px">Ação</th>
+              <td mat-cell *matCellDef="let row">
+                <button mat-icon-button matTooltip="Editar {{formName}}" style="color: #58585A" (click)="editCar(row.id)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button matTooltip="Deletar {{formName}}" style="color: #FA8072"
+                  (click)="openConfirmation(row.id)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+  
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+  
+          <br>
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"></mat-paginator>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
