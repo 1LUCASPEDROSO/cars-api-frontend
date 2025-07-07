@@ -1,0 +1,34 @@
+.main-body {
+    max-width: 1348px;
+    padding: 10px;
+    
+    mat-form-field {
+      width: 100%;
+    }
+  }
+  
+  mat-card {
+    padding: 10px;
+  }
+  
+  mat-card mat-card-header mat-card-title {
+    font-size: 18px;
+    font-weight: 600;
+    padding-bottom: 20px;
+  }
+  mat-card-actions{
+   margin-left: auto;
+  }
+  
+    mat-card-actions button {
+    align-content: center;
+    margin: 5px;
+    width: 80px;
+  }
+  .row{
+    display: block;
+  }
+  .ipt-fipe{
+    text-align: left;
+  }
+  
