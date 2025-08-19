@@ -68,11 +68,6 @@ export class FormBrandComponent implements OnInit {
     }
     else if (this.entityForm.valid) {
       const brandName = this.entityForm.value.name.trim().toLowerCase();
-      this.brandService.getBrandByName(brandName).subscribe({
-        next: (existingBrand) => {
-          if (existingBrand) {
-            this.ngx.warning("Essa marca já está registrada.");
-          } else {
             const brandData = { name: brandName };
             this.brandService.addBrand(brandData).subscribe({
               next: () => {
@@ -83,15 +78,8 @@ export class FormBrandComponent implements OnInit {
               }
             });
           }
-        },
-        error: () => {
-          this.ngx.error("Erro ao verificar se a marca já existe");
-        }
-      });
-    } else {
+    else {
       this.entityForm.markAllAsTouched();
     }
   }
-
-
 }
