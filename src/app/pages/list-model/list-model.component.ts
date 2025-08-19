@@ -16,6 +16,7 @@ import { ToastrService } from 'ngx-toastr';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import { CurrencyPipe } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-list-model',
   standalone: true,
@@ -42,6 +43,7 @@ export class ListModelComponent implements AfterViewInit{
   private ngx = inject(ToastrService)
   private brandService = inject(BrandService)
   brandsMap: { [key: number]: string } = {}
+  authService = inject(AuthService)
   formName: string = "lista de Modelos"
   entityPage: string = "/form-model"
   buttonTooltip: string = "Registrar um novo modelo"
@@ -75,7 +77,7 @@ export class ListModelComponent implements AfterViewInit{
       }
     })
   }
-  editBrand(id: number){
+  editModel(id: number){
     this.router.navigateByUrl(`${this.entityPage}/${id}`)
   }
   openConfirmation(id: number): void {
