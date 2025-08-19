@@ -9,10 +9,14 @@
             <mat-icon matPrefix>search</mat-icon>
             <input matInput (keyup)="applyFilter($event)" #input>
           </mat-form-field>
-            <button routerLink="{{entityPage}}" matTooltip={{buttonTooltip}} mat-raised-button>
+          @if(this.authService.verifyIfuserHasHole("brand-manager")){
+             <button routerLink="{{entityPage}}" matTooltip={{buttonTooltip}} mat-raised-button>
             <mat-icon>add</mat-icon>
             Novo
           </button>
+          }
+          @else {
+           }
         </div>
   
         <div class="" fxLayout="column" fxLayoutAlign="center stretch">
@@ -27,19 +31,28 @@
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
               <td mat-cell *matCellDef="let element"> {{element.name}} </td>
             </ng-container>
-            <ng-container matColumnDef="action">
-              <th mat-header-cell *matHeaderCellDef style="width: 130px">Ação</th>
-              <td mat-cell *matCellDef="let row">
-                <button mat-icon-button matTooltip="Editar {{formName}}" style="color: #58585A" (click)="editBrand(row.id)">
-                  <mat-icon>edit</mat-icon>
-                </button>
-                <button mat-icon-button matTooltip="Deletar {{formName}}" style="color: #FA8072"
-                  (click)="openConfirmation(row.id)">
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </td>
-            </ng-container>
-  
+             @if(this.authService.verifyIfuserHasHole("brand-manager")){
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef style="width: 130px">Ação</th>
+                <td mat-cell *matCellDef="let row">
+                  <button mat-icon-button matTooltip="Editar {{formName}}" style="color: #58585A" (click)="editBrand(row.id)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button matTooltip="Deletar {{formName}}" style="color: #FA8072"
+                    (click)="openConfirmation(row.id)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+          }
+          @else {
+             <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef style="width: 200px">Ação</th>
+                <td mat-cell *matCellDef="let row">
+                  Sem Acesso
+                </td>
+              </ng-container>
+           }
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>

@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ToastrService } from 'ngx-toastr';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSort, MatSortModule} from '@angular/material/sort';
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-list-brand',
   standalone: true,
@@ -37,6 +38,7 @@ export class ListBrandComponent implements AfterViewInit{
   router = inject(Router);
   dialog = inject(MatDialog);
   ngx = inject(ToastrService)
+  authService = inject(AuthService)
   formName: string = "lista de marcas"
   entityPage: string = "/form-brand"
   buttonTooltip: string = "Registrar uma nova marca"
