@@ -17,6 +17,7 @@ import { Car } from '../../models/car';
 import { CarService } from '../../services/car.service';
 import { DatePipe } from '@angular/common';
 import { GasType } from '../../models/gas-type';
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-list-model',
   standalone: true,
@@ -43,6 +44,7 @@ export class ListCarComponent implements AfterViewInit{
   private dialog = inject(MatDialog)
   private ngx = inject(ToastrService)
   modelMap: { [key: number]: string } = {}
+  authService = inject(AuthService)
   formName: string = "lista de Carros"
   entityPage: string = "/form-car"
   buttonTooltip: string = "Registrar um novo Carro"
