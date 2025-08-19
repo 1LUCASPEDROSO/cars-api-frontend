@@ -1,0 +1,18 @@
+<div class="main-body">
+    <mat-card>
+        <img src="/oficina.jpg" alt="icon" srcset="">
+        <form [formGroup]="entityForm">
+         <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email" placeholder="digite o email">
+        </mat-form-field>    
+        <mat-form-field>
+            <mat-label>Senha</mat-label>
+            <input matInput type="password" formControlName="password" placeholder="digite a senha">
+        </mat-form-field>    
+    </form>
+     <mat-card-actions>
+                <button mat-raised-button color="primary" type="submit" (click)="login()">Login</button>
+     </mat-card-actions>
+    </mat-card>
+</div>
