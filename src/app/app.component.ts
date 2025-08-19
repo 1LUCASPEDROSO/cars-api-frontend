@@ -1,4 +1,4 @@
-import { Component, inject, DoCheck } from '@angular/core';
+import { Component, inject, DoCheck, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AsyncPipe } from '@angular/common';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
@@ -12,7 +12,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { environment } from '../environments/environment';
-import { ToastrModule, ToastNoAnimation, ToastNoAnimationModule } from 'ngx-toastr';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -33,17 +33,26 @@ import { ToastrModule, ToastNoAnimation, ToastNoAnimationModule } from 'ngx-toas
   styleUrl: './app.component.scss'
 })
 export class AppComponent{
-  title = 'LTA';
+  title = 'CarOps';
   env: string = environment.production ? 'Produção' : 'Desenvolvimento';
-
   isLogged: boolean = false;
-
- 
   private breakpointObserver = inject(BreakpointObserver);
-
+  private  authService = inject(AuthService);
+  private router = inject(Router)
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
       shareReplay()
     );
+     ngDoCheck(): void {
+
+    let currentURL = this.router.url;
+
+    if (currentURL==='/login')
+      this.authService.logout();
+    this.isLogged = this.authService.isLoggedIn();
+  }
+  getUserName(){
+    return this.authService.getUserLogged()
+  }
 }
